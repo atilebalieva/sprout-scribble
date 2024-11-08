@@ -22,6 +22,13 @@
       "when": 1731001763218,
       "tag": "0002_groovy_norman_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1731090847220,
+      "tag": "0003_natural_vertigo",
+      "breakpoints": true
     }
   ]
 }

@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { RegisterSchema } from "@/types/register-schema";
 import { eq } from "drizzle-orm";
 import { db } from "..";
+import { users } from "../schema";
 
 const action = createSafeActionClient();
 
