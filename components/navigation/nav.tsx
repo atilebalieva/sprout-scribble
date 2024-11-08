@@ -1,7 +1,9 @@
 import { auth } from "@/server/auth";
 import { UserButton } from "./user-button";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import Logo from "./logo";
+import { Button } from "../ui/button";
+import { FaSignInAlt } from "react-icons/fa";
 
 export default async function Nav() {
   const session = await auth();
@@ -9,13 +11,16 @@ export default async function Nav() {
   return (
     <header className="py-8">
       <nav>
-        <ul className="flex justify-between">
-          <li>Logo</li>
+        <ul className="flex justify-between items-center">
+          <Link href={"/"}>
+            <Logo />
+          </Link>
           {!session ? (
             <li>
-              <Button asChild>
-                <Link href="/auth/login" className="flex gap-2">
-                  login
+              <Button>
+                <Link href="/auth/login" className="flex gap-2 items-center">
+                  <FaSignInAlt />
+                  <span>Login</span>
                 </Link>
               </Button>
             </li>
