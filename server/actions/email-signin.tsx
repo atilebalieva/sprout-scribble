@@ -15,6 +15,5 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
 
   if (existingUser?.email !== email) return { error: "Email not found" };
 
-  /* if(existingUser.emailVerified)
-   */ return { success: email };
+  return { success: email };
 });
