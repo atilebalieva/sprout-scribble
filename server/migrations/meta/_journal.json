@@ -29,6 +29,27 @@
       "when": 1731090847220,
       "tag": "0003_natural_vertigo",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1731096415599,
+      "tag": "0004_late_violations",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1731096995286,
+      "tag": "0005_fearless_starjammers",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1731177520789,
+      "tag": "0006_amazing_moondragon",
+      "breakpoints": true
     }
   ]
 }

@@ -1,14 +1,19 @@
 import { timestamp, pgTable, text, primaryKey, integer, pgEnum, boolean } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
+import { createId } from "@paralleldrive/cuid2";
 
 export const RoleEnum = pgEnum("roles", ["user", "admin"]);
 
 export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name"),
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  password: text("password"),
   twoFactorEnabled: boolean("twoFactorEnabled").default(false),
   role: RoleEnum("roles").default("user"),
 });
@@ -16,7 +21,7 @@ export const users = pgTable("user", {
 export const accounts = pgTable(
   "account",
   {
-    userId: text("userId")
+    id: text("id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     type: text("type").$type<AdapterAccount>().notNull(),
@@ -43,6 +48,7 @@ export const emailTokens = pgTable(
     id: text("id").notNull(),
     token: text("token").notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
+    email: text("email").notNull(),
   },
   (verificationToken) => ({
     compoundKey: primaryKey({ columns: [verificationToken.id, verificationToken.token] }),
