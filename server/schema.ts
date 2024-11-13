@@ -54,3 +54,29 @@ export const emailTokens = pgTable(
     compoundKey: primaryKey({ columns: [verificationToken.id, verificationToken.token] }),
   }),
 );
+
+export const passwordResetTokens = pgTable(
+  "password_reset_tokens",
+  {
+    id: text("id").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+    email: text("email").notNull(),
+  },
+  (verificationToken) => ({
+    compoundKey: primaryKey({ columns: [verificationToken.id, verificationToken.token] }),
+  }),
+);
+
+export const twoFactorTokens = pgTable(
+  "two_factor_tokens",
+  {
+    id: text("id").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+    email: text("email").notNull(),
+  },
+  (verificationToken) => ({
+    compoundKey: primaryKey({ columns: [verificationToken.id, verificationToken.token] }),
+  }),
+);

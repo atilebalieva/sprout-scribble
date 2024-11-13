@@ -3,8 +3,8 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthCard } from "./auth-card";
-import { LoginSchema } from "@/types/login-schema";
 import * as z from "zod";
+import { NewPasswordSchema } from "@/types/new-password-schema";
 import { Input } from "@/components/ui/input";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
 import Link from "next/link";
@@ -16,25 +16,23 @@ import { useState } from "react";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
 
-export const LoginForm = () => {
-  const form = useForm({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: { email: "", password: "" },
+export const NewPasswordForm = () => {
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
+    defaultValues: { token: "", password: "" },
   });
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const { execute, status } = useAction(emailSignIn, {
+  /*   const { execute, status } = useAction(emailSignIn, {
     onSuccess(data) {
       if (data?.error) setError(data.error);
       if (data?.success) setSuccess(data.success);
     },
-  });
+  }); */
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    execute(values);
-  };
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {};
 
   return (
     <AuthCard cardTitle="Welcome back!" backButtonHref="auth/register" backButtonLabel="Create new Account" showSocial>

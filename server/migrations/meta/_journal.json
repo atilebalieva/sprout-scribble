@@ -50,6 +50,13 @@
       "when": 1731177520789,
       "tag": "0006_amazing_moondragon",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1731532329990,
+      "tag": "0007_strong_masque",
+      "breakpoints": true
     }
   ]
 }
