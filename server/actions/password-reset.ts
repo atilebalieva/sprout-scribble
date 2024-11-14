@@ -11,9 +11,10 @@ import { sendPasswordResetEmail } from "./email";
 const action = createSafeActionClient();
 
 export const resetPassword = action(ResetSchema, async ({ email }) => {
+  //aisal.uson
   const existingUser = await db.query.users.findFirst({
     where: eq(users.email, email),
-  });
+  }); //true
 
   if (!existingUser) return { error: "User not Found" };
 
@@ -23,5 +24,5 @@ export const resetPassword = action(ResetSchema, async ({ email }) => {
 
   await sendPasswordResetEmail(passwordResetToken[0].email, passwordResetToken[0].token);
 
-  return { succsess: "reset email sent" };
+  return { success: "Reset email sent" };
 });

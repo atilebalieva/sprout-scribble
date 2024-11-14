@@ -80,6 +80,8 @@ export const getPasswordResetTokenByEmail = async (email: string) => {
     const passwordResetToken = await db.query.passwordResetTokens.findFirst({
       where: eq(passwordResetTokens.email, email),
     });
+
+    return passwordResetToken;
   } catch {
     return null;
   }
@@ -91,13 +93,16 @@ export const generatePasswordResetToken = async (email: string) => {
 
     const expires = new Date(new Date().getTime() + 3600 * 1000);
 
-    const existingToken = await getPasswordResetTokenByEmail(email);
+    const existingToken = await getPasswordResetTokenByEmail(email); //no token
 
     if (existingToken) {
       await db.delete(passwordResetTokens).where(eq(passwordResetTokens.id, existingToken.id));
     }
 
-    const passwordResetToken = await db.insert(passwordResetTokens).values({ email, token, expires }).returning();
+    const passwordResetToken = await db
+      .insert(passwordResetTokens)
+      .values({ id: crypto.randomUUID(), token, expires, email })
+      .returning();
 
     return passwordResetToken;
   } catch {

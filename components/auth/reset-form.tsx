@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
-import { newPassword } from "@/server/actions/new-password";
 import { ResetSchema } from "@/types/reset-schema";
 import { resetPassword } from "@/server/actions/password-reset";
 

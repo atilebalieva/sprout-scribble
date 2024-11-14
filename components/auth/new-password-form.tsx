@@ -15,12 +15,16 @@ import { useState } from "react";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
 import { newPassword } from "@/server/actions/new-password";
+import { useSearchParams } from "next/navigation";
 
 export const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: { token: "", password: "" },
   });
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -33,7 +37,7 @@ export const NewPasswordForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    execute(values);
+    execute({ password: values.password, token });
   };
 
   return (
@@ -56,9 +60,6 @@ export const NewPasswordForm = () => {
           />
           <FormSuccess message={success} />
           <FormError message={error} />
-          <Button size={"sm"} variant={"link"} asChild>
-            <Link href="auth/reset">Forgot your password</Link>
-          </Button>
           <br />
           <Button type={"submit"} className={cn("w-full", status === "executing" ? "animate-pulse" : "")}>
             {"Reset the password"}
