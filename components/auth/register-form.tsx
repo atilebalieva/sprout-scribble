@@ -41,7 +41,7 @@ export default function RegisterForm() {
   return (
     <AuthCard
       cardTitle="Create an account"
-      backButtonHref="auth/login"
+      backButtonHref="/auth/login"
       backButtonLabel="Already have an account?"
       showSocial
     >
@@ -93,7 +93,7 @@ export default function RegisterForm() {
           <FormSuccess message={success} />
           <FormError message={error} />
           <Button size={"sm"} variant={"link"} asChild>
-            <Link href="auth/reset">Forgot your password</Link>
+            <Link href="/auth/reset">Forgot your password</Link>
           </Button>
           <br />
           <Button type={"submit"} className={cn("w-full", status === "executing" ? "animate-pulse" : "")}>

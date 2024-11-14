@@ -19,3 +19,17 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   if (error) console.log(error);
   if (data) return data;
 };
+
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const confirmLink = `${domain}/auth/new-password?token=${token}`;
+
+  const { data, error } = await resend.emails.send({
+    from: "Acme <onboarding@resend.dev>",
+    to: email,
+    subject: "Sproud and Scribble - reset your password",
+    html: `<p>Click to <a href="${confirmLink}">reset your password</a></p>`,
+  });
+
+  if (error) console.log(error);
+  if (data) return data;
+};

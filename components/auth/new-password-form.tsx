@@ -9,12 +9,12 @@ import { Input } from "@/components/ui/input";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { emailSignIn } from "@/server/actions/email-signin";
 import { useAction } from "next-safe-action/hooks";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
+import { newPassword } from "@/server/actions/new-password";
 
 export const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
@@ -25,34 +25,21 @@ export const NewPasswordForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  /*   const { execute, status } = useAction(emailSignIn, {
+  const { execute, status } = useAction(newPassword, {
     onSuccess(data) {
       if (data?.error) setError(data.error);
       if (data?.success) setSuccess(data.success);
     },
-  }); */
+  });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {};
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+    execute(values);
+  };
 
   return (
-    <AuthCard cardTitle="Welcome back!" backButtonHref="auth/register" backButtonLabel="Create new Account" showSocial>
+    <AuthCard cardTitle="Enter a new password" backButtonHref="auth/login" backButtonLabel="Back to login" showSocial>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="email@gmail.com" type="email" autoComplete="email" />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="password"
@@ -74,7 +61,7 @@ export const NewPasswordForm = () => {
           </Button>
           <br />
           <Button type={"submit"} className={cn("w-full", status === "executing" ? "animate-pulse" : "")}>
-            {"Login"}
+            {"Reset the password"}
           </Button>
         </form>
       </FormProvider>
