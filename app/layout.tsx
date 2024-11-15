@@ -3,6 +3,7 @@ import "./globals.css";
 import Nav from "@/components/navigation/nav";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/team-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={(cn("px-6 md:px-24 max-w-7xl mx-auto"), `${inter.className}`)}>
         {" "}
-        <Nav />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Nav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
