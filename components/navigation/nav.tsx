@@ -12,7 +12,7 @@ export default async function Nav() {
     <header className="py-8">
       <nav>
         <ul className="flex justify-between items-center">
-          <Link href={"/"}>
+          <Link href={"/"} aria-label="logo">
             <Logo />
           </Link>
           {!session ? (
