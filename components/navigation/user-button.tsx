@@ -5,21 +5,22 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { LogOut, Moon, Settings, Sun, TruckIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Switch } from "../ui/switch";
+import { useRouter } from "next/navigation";
 
 export const UserButton = ({ user }: Session) => {
   const [checked, setChecked] = useState(false);
   const { setTheme, theme } = useTheme();
+  const router = useRouter();
 
   function setSwitchState() {
     switch (theme) {
@@ -44,13 +45,6 @@ export const UserButton = ({ user }: Session) => {
                 <div className="font-bold">{user.name?.charAt(0)}</div>
               </AvatarFallback>
             )}
-            {/* <Suspense fallback={<AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>}>
-              {user?.image && user.name && (
-                <AvatarImage src={user.image} alt={user.name}>
-                  <Image src={user.image} alt={user.name} />
-                </AvatarImage>
-              )}
-            </Suspense> */}
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-64 p-6">
@@ -64,11 +58,17 @@ export const UserButton = ({ user }: Session) => {
             <span className="text-xs font-medium text-secondary-foreground">{user.email}</span>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="group py-2 font-medium cursor-pointer">
+          <DropdownMenuItem
+            className="group py-2 font-medium cursor-pointer"
+            onClick={() => router.push("/dashboard/orders")}
+          >
             <TruckIcon size={14} className="group-hover:translate-x-1  duration-300 mr-1" />
             My orders
           </DropdownMenuItem>
-          <DropdownMenuItem className="group py-2 font-medium cursor-pointer" onClick={() => signOut()}>
+          <DropdownMenuItem
+            className="group py-2 font-medium cursor-pointer"
+            onClick={() => router.push("/dashboard/settings")}
+          >
             <Settings size={14} className="group-hover:rotate-180 duration-300 easy-in-out mr-3" /> Settings
           </DropdownMenuItem>
           {theme ? (
