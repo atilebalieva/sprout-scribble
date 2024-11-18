@@ -64,19 +64,15 @@ export const UserButton = ({ user }: Session) => {
             <span className="text-xs font-medium text-secondary-foreground">{user.email}</span>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="group py-2 font-medium cursor-pointer transition-all duration-500">
-            <TruckIcon size={14} className="group-hover:translate-x-1 transition-all duration-300 mr-1" />
+          <DropdownMenuItem className="group py-2 font-medium cursor-pointer">
+            <TruckIcon size={14} className="group-hover:translate-x-1  duration-300 mr-1" />
             My orders
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className="group py-2 font-medium cursor-pointer transition-all duration-500"
-            onClick={() => signOut()}
-          >
-            <Settings size={14} className="group-hover:rotate-180 transition-all duration-300 easy-in-out mr-3" />{" "}
-            Settings
+          <DropdownMenuItem className="group py-2 font-medium cursor-pointer" onClick={() => signOut()}>
+            <Settings size={14} className="group-hover:rotate-180 duration-300 easy-in-out mr-3" /> Settings
           </DropdownMenuItem>
           {theme ? (
-            <DropdownMenuItem className="group py-2 font-medium cursor-pointer transition-all duration-500">
+            <DropdownMenuItem className="group py-2 font-medium cursor-pointer">
               <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
                 <div className="relative flex mr-3 ">
                   <Sun
@@ -104,7 +100,7 @@ export const UserButton = ({ user }: Session) => {
             </DropdownMenuItem>
           ) : null}
           <DropdownMenuItem
-            className="group py-2 focus:bg-destructive/15 font-medium cursor-pointer transition-all duration-500"
+            className="group py-2 focus:bg-destructive/15 font-medium cursor-pointers"
             onClick={() => signOut()}
           >
             <LogOut size={14} className="group-hover:rotate-180 transition-all duration-300 easy-in-out mr-3" /> Sign
