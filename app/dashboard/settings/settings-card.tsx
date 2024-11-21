@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { settings } from "@/server/actions/settings";
-/* import { UploadButton } from "@/app/api/uploadthing/upload"; */
 
 type SettingsForm = {
   session: Session;
@@ -26,7 +25,9 @@ export default function SettingsCard(session: SettingsForm) {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [avatarUploading, setAvatarUploading] = useState(false);
+
   console.log(session.session.user);
+
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
@@ -50,6 +51,7 @@ export default function SettingsCard(session: SettingsForm) {
   });
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+    console.log(values);
     execute(values);
   };
 

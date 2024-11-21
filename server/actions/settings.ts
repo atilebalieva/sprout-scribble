@@ -14,16 +14,13 @@ const action = createSafeActionClient();
 export const settings = action(SettingsSchema, async (values) => {
   const user = await auth();
 
-  if (!user) {
-    return { error: "User not found" };
-  }
+  if (!user) return { error: "User not found" };
+
   const dbUser = await db.query.users.findFirst({
     where: eq(users.id, user.user.id),
   });
 
-  if (!dbUser) {
-    return { error: "User not found" };
-  }
+  if (!dbUser) return { error: "User not found" };
 
   if (user.user.isOAuth) {
     values.email = undefined;
@@ -34,24 +31,25 @@ export const settings = action(SettingsSchema, async (values) => {
 
   if (values.password && values.newPassword && dbUser.password) {
     const passwordMatch = await bcrypt.compare(values.password, dbUser.password);
-    if (!passwordMatch) {
-      return { error: "Password does not match" };
-    }
+
+    if (!passwordMatch) return { error: "Password does not match" };
+
     const samePassword = await bcrypt.compare(values.newPassword, dbUser.password);
-    if (samePassword) {
-      return { error: "New password is the same as the old password" };
-    }
+
+    if (samePassword) return { error: "New password is the same as the old password" };
+
     const hashedPassword = await bcrypt.hash(values.newPassword, 10);
     values.password = hashedPassword;
     values.newPassword = undefined;
   }
+
   const updatedUser = await db
     .update(users)
     .set({
-      twoFactorEnabled: values.isTwoFactorEnabled,
       name: values.name,
-      email: values.email,
       password: values.password,
+      twoFactorEnabled: values.isTwoFactorEnabled,
+      email: values.email,
       image: values.image,
     })
     .where(eq(users.id, dbUser.id));

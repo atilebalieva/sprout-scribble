@@ -33,11 +33,13 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    console.log(values);
+
     execute(values);
   };
 
   return (
-    <AuthCard cardTitle="Welcome back!" backButtonHref="auth/register" backButtonLabel="Create new Account" showSocial>
+    <AuthCard cardTitle="Welcome back!" backButtonHref="/auth/register" backButtonLabel="Create new Account" showSocial>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
