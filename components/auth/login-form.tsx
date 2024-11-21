@@ -25,7 +25,7 @@ export const LoginForm = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [showTwoFactor, setShowTwoFactor] = useState();
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
 
   const { execute, status } = useAction(emailSignIn, {
     onSuccess(data) {
@@ -71,20 +71,6 @@ export const LoginForm = () => {
             />
           ) : (
             <>
-              {/*               <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="***********" type="password" autoComplete="password" />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               <FormField
                 control={form.control}
                 name="email"

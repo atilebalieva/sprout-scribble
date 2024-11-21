@@ -25,7 +25,7 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
 
       await sendVerificationEmail(verificationToken[0].email, verificationToken[0].token);
 
-      return { success: "Confirmation email sent" };
+      return { success: "Confirmation Email sent" };
     }
 
     if (existingUser.twoFactorEnabled && existingUser.email) {
@@ -36,7 +36,7 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
 
         const hasExpired = new Date(twoFactorToken.expires) < new Date();
 
-        if (hasExpired) return { error: "Token expired" };
+        if (hasExpired) return { error: "Token has expired" };
 
         await db.delete(twoFactorTokens).where(eq(twoFactorTokens.id, twoFactorToken.id));
       }
@@ -46,6 +46,7 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
       if (!token) return { error: "Token not generated" };
 
       await sendTwoFactorTokenByEmail(token[0].email, token[0].token);
+
       return { twoFactor: "Two Factor Token Sent" };
     }
 
