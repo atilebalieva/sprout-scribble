@@ -14,7 +14,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     session?.user.role === "admin"
       ? [
           { label: "Analytics", path: "/dashboard/analytics", icon: <BarChart size={16} /> },
-          { label: "Create", path: "/dashboard/add-products", icon: <PenSquare size={16} /> },
+          { label: "Create", path: "/dashboard/add-product", icon: <PenSquare size={16} /> },
           { label: "Products", path: "/dashboard/products", icon: <Package size={16} /> },
         ]
       : [];
