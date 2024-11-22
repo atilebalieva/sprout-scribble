@@ -5,10 +5,10 @@ import { db } from "..";
 import { emailTokens, passwordResetTokens, twoFactorTokens, users } from "../schema";
 import crypto from "crypto";
 
-export const getVerificationTokenByEmail = async (token: string) => {
+export const getVerificationTokenByEmail = async (email: string) => {
   try {
     const verificationToken = await db.query.emailTokens.findFirst({
-      where: eq(emailTokens.token, token),
+      where: eq(emailTokens.token, email),
     });
     return verificationToken;
   } catch (error) {
@@ -22,11 +22,18 @@ export const generateEmailVerificationToken = async (email: string) => {
 
   const existingToken = await getVerificationTokenByEmail(email);
 
-  if (existingToken) await db.delete(emailTokens).where(eq(emailTokens.id, existingToken.id));
+  if (existingToken) {
+    await db.delete(emailTokens).where(eq(emailTokens.id, existingToken.id));
+  }
 
   const verificationToken = await db
     .insert(emailTokens)
-    .values({ id: crypto.randomUUID(), email, token, expires })
+    .values({
+      id: crypto.randomUUID(),
+      email,
+      token,
+      expires,
+    })
     .returning();
   return verificationToken;
 };
@@ -102,7 +109,7 @@ export const getTwoFactorTokenByToken = async (token: string) => {
 export const generatePasswordResetToken = async (email: string) => {
   try {
     const token = crypto.randomUUID();
-
+    //Hour Expiry
     const expires = new Date(new Date().getTime() + 3600 * 1000);
 
     const existingToken = await getPasswordResetTokenByEmail(email);
@@ -111,7 +118,12 @@ export const generatePasswordResetToken = async (email: string) => {
     }
     const passwordResetToken = await db
       .insert(passwordResetTokens)
-      .values({ id: crypto.randomUUID(), email, token, expires })
+      .values({
+        id: crypto.randomUUID(),
+        email,
+        token,
+        expires,
+      })
       .returning();
     return passwordResetToken;
   } catch (e) {
@@ -122,7 +134,7 @@ export const generatePasswordResetToken = async (email: string) => {
 export const generateTwoFactorToken = async (email: string) => {
   try {
     const token = crypto.randomInt(100_000, 1_000_000).toString();
-
+    //Hour Expiry
     const expires = new Date(new Date().getTime() + 3600 * 1000);
 
     const existingToken = await getTwoFactorTokenByEmail(email);
@@ -131,7 +143,12 @@ export const generateTwoFactorToken = async (email: string) => {
     }
     const twoFactorToken = await db
       .insert(twoFactorTokens)
-      .values({ id: crypto.randomUUID(), email, token, expires })
+      .values({
+        id: crypto.randomUUID(),
+        email,
+        token,
+        expires,
+      })
       .returning();
     return twoFactorToken;
   } catch (e) {

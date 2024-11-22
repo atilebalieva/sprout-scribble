@@ -12,7 +12,7 @@ export const sendTwoFactorTokenByEmail = async (email: string, token: string) =>
   const { data, error } = await resend.emails.send({
     from: "Acme <onboarding@resend.dev>",
     to: email,
-    subject: "Sproud and Scribble - Your two Factor Varification ",
+    subject: "Sproud and Scribble - Your two factor Verification ",
     html: `<p>Your Confirmation Code: ${token}</p>`,
   });
 
