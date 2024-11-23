@@ -9,9 +9,15 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { useAction } from "next-safe-action/hooks";
 import { DollarSign } from "lucide-react";
+import Tiptap from "./tiptap";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function ProductForm() {
-  const form = useForm<z.infer<typeof ProductSchema>>({ defaultValues: { title: "", description: "", price: 0 } });
+  const form = useForm<z.infer<typeof ProductSchema>>({
+    resolver: zodResolver(ProductSchema),
+    defaultValues: { title: "", description: "", price: 0 },
+    mode: "onChange",
+  });
 
   const { execute, status } = useAction();
 
@@ -45,8 +51,7 @@ export default function ProductForm() {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      {/*  <Input placeholder="Saekdong Stripe" {...field} />
-                       */}{" "}
+                      <Tiptap val={field.value} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
