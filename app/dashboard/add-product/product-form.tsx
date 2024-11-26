@@ -1,7 +1,9 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
+
+import { ProductSchema } from "@/types/products-schema";
+import * as z from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -13,7 +15,8 @@ import { useAction } from "next-safe-action/hooks";
 import { createProduct } from "@/server/actions/create-product";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { ProductSchema } from "@/types/products-schema";
+import { getProduct } from "@/server/actions/get-product";
+import { useEffect } from "react";
 
 export default function ProductForm() {
   const form = useForm<z.infer<typeof ProductSchema>>({
@@ -27,6 +30,33 @@ export default function ProductForm() {
   });
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editMode = searchParams.get("id");
+
+  const checkProduct = async (id: number) => {
+    if (editMode) {
+      const data = await getProduct(id);
+      if (data.error) {
+        toast.error(data.error);
+        router.push("/dashboard/products");
+        return;
+      }
+      if (data.success) {
+        const id = parseInt(editMode);
+        form.setValue("title", data.success.title);
+        form.setValue("description", data.success.description);
+        form.setValue("price", data.success.price);
+        form.setValue("id", id);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (editMode) {
+      checkProduct(parseInt(editMode));
+    }
+  }, []);
+
   const { execute, status } = useAction(createProduct, {
     onSuccess: (data) => {
       if (data?.error) {
@@ -37,6 +67,14 @@ export default function ProductForm() {
         toast.success(data.success);
       }
     },
+    onExecute: (data) => {
+      if (editMode) {
+        toast.loading("Editing Product");
+      }
+      if (!editMode) {
+        toast.loading("Creating Product");
+      }
+    },
   });
 
   async function onSubmit(values: z.infer<typeof ProductSchema>) {
@@ -45,7 +83,10 @@ export default function ProductForm() {
 
   return (
     <Card>
-      <CardHeader></CardHeader>
+      <CardHeader>
+        <CardTitle>{editMode ? "Edit Product" : "Create Product"}</CardTitle>
+        <CardDescription>{editMode ? "Make changes to existing product" : "Add a brand new product"}</CardDescription>
+      </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -93,12 +134,10 @@ export default function ProductForm() {
             />
             <Button
               className="w-full"
-              /*               disabled={status === "executing" || !form.formState.isValid || !form.formState.isDirty}
-               */ type="submit"
+              disabled={status === "executing" || !form.formState.isValid || !form.formState.isDirty}
+              type="submit"
             >
-              Submit
-              {/*               {editMode ? "Save Changes" : "Create Product"}
-               */}{" "}
+              {editMode ? "Save Changes" : "Create Product"}
             </Button>
           </form>
         </Form>
