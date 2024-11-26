@@ -1,19 +1,19 @@
 "use client";
 
+import { Toggle } from "@/components/ui/toggle";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Bold, Italic, List, ListOrdered, Strikethrough } from "lucide-react";
-import { Toggle } from "@/components/ui/toggle";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Placeholder } from "@tiptap/extension-placeholder";
 
-const Tiptap = ({ val }: { val: unknown }) => {
+const Tiptap = ({ val }: { val: string }) => {
   const { setValue } = useFormContext();
-
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
-        placeholder: "Add longer description for your product",
+        placeholder: "Add a longer description for your products",
         emptyNodeClass:
           "first:before:text-gray-600 first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none",
       }),
@@ -23,6 +23,7 @@ const Tiptap = ({ val }: { val: unknown }) => {
             class: "list-decimal pl-4",
           },
         },
+
         bulletList: {
           HTMLAttributes: {
             class: "list-disc pl-4",
@@ -30,6 +31,7 @@ const Tiptap = ({ val }: { val: unknown }) => {
         },
       }),
     ],
+
     onUpdate: ({ editor }) => {
       const content = editor.getHTML();
       setValue("description", content, {
@@ -46,58 +48,52 @@ const Tiptap = ({ val }: { val: unknown }) => {
     content: val,
   });
 
+  useEffect(() => {
+    if (editor?.isEmpty) editor.commands.setContent(val);
+  }, [val]);
+
   return (
     <div className="flex flex-col gap-2">
       {editor && (
         <div className="border-input border rounded-md">
           <Toggle
-            size={"sm"}
             pressed={editor.isActive("bold")}
-            onPressedChange={() => {
-              editor.chain().focus().toggleBold().run();
-            }}
+            onPressedChange={() => editor.chain().focus().toggleBold().run()}
+            size={"sm"}
           >
             <Bold className="w-4 h-4" />
           </Toggle>
           <Toggle
-            size={"sm"}
             pressed={editor.isActive("italic")}
-            onPressedChange={() => {
-              editor.chain().focus().toggleItalic().run();
-            }}
+            onPressedChange={() => editor.chain().focus().toggleItalic().run()}
+            size={"sm"}
           >
             <Italic className="w-4 h-4" />
           </Toggle>
           <Toggle
-            size={"sm"}
             pressed={editor.isActive("strike")}
-            onPressedChange={() => {
-              editor.chain().focus().toggleStrike().run();
-            }}
+            onPressedChange={() => editor.chain().focus().toggleStrike().run()}
+            size={"sm"}
           >
             <Strikethrough className="w-4 h-4" />
           </Toggle>
           <Toggle
-            size={"sm"}
             pressed={editor.isActive("orderedList")}
-            onPressedChange={() => {
-              editor.chain().focus().toggleOrderedList().run();
-            }}
+            onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
+            size={"sm"}
           >
             <ListOrdered className="w-4 h-4" />
           </Toggle>
           <Toggle
-            size={"sm"}
             pressed={editor.isActive("bulletList")}
-            onPressedChange={() => {
-              editor.chain().focus().toggleBulletList().run();
-            }}
+            onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+            size={"sm"}
           >
             <List className="w-4 h-4" />
           </Toggle>
         </div>
       )}
-      <EditorContent editor={editor} />
+      <EditorContent placeholder="heyy" editor={editor} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Nav from "@/components/navigation/nav";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/team-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         {" "}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Nav />
+          <Toaster richColors />
           {children}
         </ThemeProvider>
       </body>
