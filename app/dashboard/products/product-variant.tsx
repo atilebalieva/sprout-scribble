@@ -109,9 +109,6 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
     });
 
     function onSubmit(values: z.infer<typeof VariantSchema>) {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-
       execute(values);
     }
 
