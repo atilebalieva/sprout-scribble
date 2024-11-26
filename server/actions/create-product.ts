@@ -1,6 +1,6 @@
 "use server";
 
-import { ProductSchema } from "@/types/product-schema";
+import { ProductSchema } from "@/types/products-schema";
 import { createSafeActionClient } from "next-safe-action";
 import { db } from "..";
 import { eq } from "drizzle-orm";
