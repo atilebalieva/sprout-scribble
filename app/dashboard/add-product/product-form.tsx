@@ -1,12 +1,10 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
-import { ProductSchema } from "@/types/products-schema";
-import * as z from "zod";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { zProductSchema, ProductSchema } from "@/types/products-schema";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DollarSign } from "lucide-react";
 import Tiptap from "./tiptap";
@@ -19,7 +17,7 @@ import { getProduct } from "@/server/actions/get-product";
 import { useEffect } from "react";
 
 export default function ProductForm() {
-  const form = useForm<z.infer<typeof ProductSchema>>({
+  const form = useForm<zProductSchema>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       title: "",
@@ -77,7 +75,7 @@ export default function ProductForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof ProductSchema>) {
+  async function onSubmit(values: zProductSchema) {
     execute(values);
   }
 

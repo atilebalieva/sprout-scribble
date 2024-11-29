@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -109,6 +109,9 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
     });
 
     function onSubmit(values: z.infer<typeof VariantSchema>) {
+      // Do something with the form values.
+      // ✅ This will be type-safe and validated.
+
       execute(values);
     }
 
