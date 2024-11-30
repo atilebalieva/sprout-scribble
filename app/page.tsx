@@ -13,6 +13,8 @@ export default async function Home() {
     orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
   });
 
+  console.log("DATA:", data);
+
   return (
     <main className="">
       <Products variants={data} />

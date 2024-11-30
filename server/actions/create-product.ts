@@ -11,7 +11,6 @@ const action = createSafeActionClient();
 
 export const createProduct = action(ProductSchema, async ({ description, price, title, id }) => {
   try {
-    //EDIT MODE
     if (id) {
       const currentProduct = await db.query.products.findFirst({
         where: eq(products.id, id),
