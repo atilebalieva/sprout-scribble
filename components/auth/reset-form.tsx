@@ -36,7 +36,7 @@ export const ResetForm = () => {
   };
 
   return (
-    <AuthCard cardTitle="Forgot your password?" backButtonHref="auth/login" backButtonLabel="Back to login" showSocial>
+    <AuthCard cardTitle="Forgot your password?" backButtonHref="/auth/login" backButtonLabel="Back to login" showSocial>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField

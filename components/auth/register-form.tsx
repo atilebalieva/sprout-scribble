@@ -14,7 +14,6 @@ import { useState } from "react";
 import { emailRegister } from "@/server/actions/email-register";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
-import getBaseUrl from "@/lib/base-url";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof RegisterSchema>>({

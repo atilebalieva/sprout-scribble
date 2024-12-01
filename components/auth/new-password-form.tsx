@@ -7,7 +7,6 @@ import * as z from "zod";
 import { NewPasswordSchema } from "@/types/new-password-schema";
 import { Input } from "@/components/ui/input";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { useAction } from "next-safe-action/hooks";
 import { cn } from "@/lib/utils";
@@ -41,7 +40,7 @@ export const NewPasswordForm = () => {
   };
 
   return (
-    <AuthCard cardTitle="Enter a new password" backButtonHref="auth/login" backButtonLabel="Back to login" showSocial>
+    <AuthCard cardTitle="Enter a new password" backButtonHref="/auth/login" backButtonLabel="Back to login" showSocial>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField

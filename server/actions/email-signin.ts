@@ -17,12 +17,15 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
       where: eq(users.email, email),
     });
 
+    console.log("ExistingUSER", existingUser);
+
     if (existingUser?.email !== email) {
       return { error: "Email not  found" };
     }
 
     if (!existingUser.emailVerified) {
       const verificationToken = await generateEmailVerificationToken(existingUser.email);
+
       await sendVerificationEmail(verificationToken[0].email, verificationToken[0].token);
       return { success: "Confirmation Email Sent!" };
     }
@@ -59,9 +62,14 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
       redirectTo: "/",
     });
 
+    return { success: "I am in success" };
+
     return { success: "User Signed In!" };
   } catch (error) {
-    if (error instanceof AuthError) {
+    {
+      return { error: "I am in error" };
+    }
+    /* if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Email or Password Incorrect" };
@@ -71,8 +79,6 @@ export const emailSignIn = action(LoginSchema, async ({ email, password, code })
           return { error: error.message };
         default:
           return { error: "Something went wrong" };
-      }
-    }
-    throw error;
+  } }*/
   }
 });
