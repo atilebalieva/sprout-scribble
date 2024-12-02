@@ -5,9 +5,8 @@ import { ShoppingBag } from "lucide-react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "../ui/drawer";
 import { AnimatePresence, motion } from "framer-motion";
 import CartItems from "./cart-items";
-/* import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
-import Payment from "./payment";
+/*import Payment from "./payment";
 import OrderConfirmed from "./order-confirmed";
 import CartProgress from "./cart-progress"; */
 
@@ -34,17 +33,17 @@ export default function CartDrawer() {
       </DrawerTrigger>
       <DrawerContent className="fixed bottom-0 left-0 max-h-[70vh] min-h-[50vh]">
         <DrawerHeader>
-          {/*           <CartMessage />
-           */}{" "}
+          <CartMessage />
         </DrawerHeader>
         <CartItems />
         {/*         <CartProgress />
          */}{" "}
-        {/*         <div className="overflow-auto p-4">
+        <div className="overflow-auto p-4">
           {checkoutProgress === "cart-page" && <CartItems />}
-          {checkoutProgress === "payment-page" && <Payment />}
+          {/*           {checkoutProgress === "payment-page" && <Payment />}
           {checkoutProgress === "confirmation-page" && <OrderConfirmed />}
-        </div> */}
+ */}{" "}
+        </div>
       </DrawerContent>
     </Drawer>
   );

@@ -8,9 +8,9 @@ import formatPrice from "@/lib/format-price";
 import Image from "next/image";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import Lottie from "lottie-react";
-/* import emptyCart from "@/public/empty-box.json";
+import emptyCart from "@/public/empty-box.json";
 import { createId } from "@paralleldrive/cuid2";
- */ import { Button } from "../ui/button";
+import { Button } from "../ui/button";
 
 export default function CartItems() {
   const { cart, addToCart, removeFromCart, setCheckoutProgress } = useCartStore();
@@ -21,11 +21,11 @@ export default function CartItems() {
     }, 0);
   }, [cart]);
 
-  /*  const priceInLetters = useMemo(() => {
+  const priceInLetters = useMemo(() => {
     return [...totalPrice.toFixed(2).toString()].map((letter) => {
       return { letter, id: createId() };
     });
-  }, [totalPrice]); */
+  }, [totalPrice]);
 
   return (
     <motion.div className="flex flex-col items-center">
@@ -33,8 +33,7 @@ export default function CartItems() {
         <div className="flex-col w-full flex items-center justify-center">
           <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
             <h2 className="text-2xl text-muted-foreground text-center">Your cart is empty</h2>
-            {/*             <Lottie className="h-64" animationData={emptyCart} />
-             */}{" "}
+            <Lottie className="h-64" animationData={emptyCart} />{" "}
           </motion.div>
         </div>
       )}
@@ -99,7 +98,7 @@ export default function CartItems() {
       <motion.div className="flex items-center justify-center relative my-4 overflow-hidden">
         <span className="text-md">Total: $</span>
         <AnimatePresence mode="popLayout">
-          {/*          {priceInLetters.map((letter, i) => (
+          {priceInLetters.map((letter, i) => (
             <motion.div key={letter.id}>
               <motion.span
                 initial={{ y: 20 }}
@@ -111,7 +110,7 @@ export default function CartItems() {
                 {letter.letter}
               </motion.span>
             </motion.div>
-          ))} */}
+          ))}
         </AnimatePresence>
       </motion.div>
       <Button
