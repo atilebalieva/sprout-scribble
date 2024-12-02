@@ -3,15 +3,20 @@ import { db } from "@/server"; /*  */
 import ReviewsForm from "./reviews-form";
 import { desc, eq } from "drizzle-orm";
 import { reviews } from "@/server/schema";
-import Review from "./review";
+import { Review } from "./review";
+
 /* import ReviewChart from "./review-chart"; */
 
 export default async function Reviews({ productID }: { productID: number }) {
+  console.log(productID);
+
   const data = await db.query.reviews.findMany({
     with: { user: true },
     where: eq(reviews.productID, productID),
     orderBy: [desc(reviews.created)],
   });
+
+  console.log("DATA", data);
 
   return (
     <section className="py-4">
