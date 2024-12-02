@@ -35,7 +35,6 @@ export default function CartDrawer() {
         <DrawerHeader>
           <CartMessage />
         </DrawerHeader>
-        <CartItems />
         {/*         <CartProgress />
          */}{" "}
         <div className="overflow-auto p-4">
