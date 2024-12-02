@@ -4,6 +4,7 @@ import { useCartStore } from "@/lib/client-store";
 import { ShoppingBag } from "lucide-react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "../ui/drawer";
 import { AnimatePresence, motion } from "framer-motion";
+import CartItems from "./cart-items";
 /* import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
 import Payment from "./payment";
@@ -36,6 +37,7 @@ export default function CartDrawer() {
           {/*           <CartMessage />
            */}{" "}
         </DrawerHeader>
+        <CartItems />
         {/*         <CartProgress />
          */}{" "}
         {/*         <div className="overflow-auto p-4">
