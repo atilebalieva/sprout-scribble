@@ -1,11 +1,9 @@
-import { db } from "@/server"; /*  */
-/* import Review from "./review"; */
+import { db } from "@/server";
 import ReviewsForm from "./reviews-form";
 import { desc, eq } from "drizzle-orm";
 import { reviews } from "@/server/schema";
 import { Review } from "./review";
-
-/* import ReviewChart from "./review-chart"; */
+import ReviewChart from "./review-chart";
 
 export default async function Reviews({ productID }: { productID: number }) {
   console.log(productID);
@@ -26,7 +24,9 @@ export default async function Reviews({ productID }: { productID: number }) {
           <ReviewsForm />
           <Review reviews={data} />
         </div>
-        <div className="flex-1 flex flex-col gap-2">{/*        <ReviewChart reviews={data} /> */}</div>
+        <div className="flex-1 flex flex-col gap-2">
+          <ReviewChart reviews={data} />
+        </div>
       </div>
     </section>
   );
