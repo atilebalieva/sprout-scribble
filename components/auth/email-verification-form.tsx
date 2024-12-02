@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from "react";
 import { AuthCard } from "./auth-card";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
-import getBaseUrl from "@/lib/base-url";
 
 export const EmailVerificationForm = () => {
   const token = useSearchParams().get("token");
